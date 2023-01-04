@@ -1,41 +1,14 @@
-function minPlanes(arr) {
-  // Check if the last airport has a plane available
-  if (arr[arr.length - 1] === 0) {
-    return -1;
-  }
+var minimumPlanes = function(array) {
 
-  // Initialize variables to keep track of the current airport and fuel
-  let currentAirport = 0;
-  let currentFuel = arr[currentAirport];
 
-  // Initialize a variable to keep track of the number of planes needed
-  let planesNeeded = 0;
-
-  while (currentAirport < arr.length - 1) {
-    // Check if we have enough fuel to reach the next airport
-    if (currentFuel >= 1) {
-      // Decrement fuel and move to the next airport
-      currentFuel--;
-      currentAirport++;
-    } else {
-      // If we don't have enough fuel, we need to hire a new plane
-      planesNeeded++;
-
-      // Check if there is a plane available at the current airport
-      if (arr[currentAirport] === 0) {
-        return -1;
-      }
-
-      // Refuel the plane and reset the fuel counter
-      currentFuel = arr[currentAirport];
+    let len = array.length - 1, curr = -1, next = 0, ans = 0
+    for (let i = 0; next < len; i++) {
+        if (i > curr) ans++, curr = next
+        next = Math.max(next, array[i] + i)
     }
-  }
-
-  return planesNeeded;
-}
+    return ans
+};
 
 
-
-
-console.log(minPlanes([2, 1, 2, 3, 1]));  // Output: 2
-console.log(minPlanes([1, 6, 3, 4, 5, 0, 0, 0, 6]));  // Output: 3
+console.log(minimumPlanes([2,1,2,3,1])); // 2
+console.log(minimumPlanes([1,6,3,4,5,0,0,0,6])); // 3
